@@ -1,0 +1,13 @@
+[package]
+name = "aoc"
+version = "0.1.0"
+authors = ["V.Koenders <V.Koenders@gs.ridder.com>"]
+edition = "2018"
+
+[[bin]]
+name = "day1"
+path = "src/bin/day1.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
