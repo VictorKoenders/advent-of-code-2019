@@ -4,11 +4,14 @@ use std::num::NonZeroU32;
 
 fn main() {
     let input = aoc::input!();
-    
+
     let mut grid = Grid::default();
     let lines: (Vec<&str>, Vec<&str>) = {
         let mut lines = input.lines();
-        (lines.next().unwrap().split(',').collect(), lines.next().unwrap().split(',').collect())
+        (
+            lines.next().unwrap().split(',').collect(),
+            lines.next().unwrap().split(',').collect(),
+        )
     };
 
     draw_lines(&mut grid, 1, &lines.0);
@@ -16,11 +19,19 @@ fn main() {
     intersect.sort_by_key(|p| p.point.0.abs() + p.point.1.abs());
     let first = intersect.iter().next().unwrap();
 
-    println!("Part 1 intersects at {:?} ({})", first, (first.point.0.abs() + first.point.1.abs()));
+    println!(
+        "Part 1 intersects at {:?} ({})",
+        first,
+        (first.point.0.abs() + first.point.1.abs())
+    );
 
     intersect.sort_by_key(|p| p.line1_length + p.line2_length);
     let first = intersect.iter().next().unwrap();
-    println!("part 2 intersects at {:?} ({})", first, first.line1_length + first.line2_length);
+    println!(
+        "part 2 intersects at {:?} ({})",
+        first,
+        first.line1_length + first.line2_length
+    );
 }
 
 #[test]
@@ -33,15 +44,35 @@ fn test_nearest_point_intersect() {
     assert_eq!((3, 3), first.point);
 
     let mut grid = Grid::default();
-    draw_lines(&mut grid, 1, &["R75","D30","R83","U83","L12","D49","R71","U7","L72"]);
-    let mut intersect = draw_lines(&mut grid, 2, &["U62","R66","U55","R34","D71","R55","D58","R83"]);
+    draw_lines(
+        &mut grid,
+        1,
+        &["R75", "D30", "R83", "U83", "L12", "D49", "R71", "U7", "L72"],
+    );
+    let mut intersect = draw_lines(
+        &mut grid,
+        2,
+        &["U62", "R66", "U55", "R34", "D71", "R55", "D58", "R83"],
+    );
     intersect.sort_by_key(|p| p.point.0.abs() + p.point.1.abs());
     let first = intersect.into_iter().next().unwrap();
     assert_eq!((155, 4), first.point);
 
     let mut grid = Grid::default();
-    draw_lines(&mut grid, 1, &["R98","U47","R26","D63","R33","U87","L62","D20","R33","U53","R51"]);
-    let mut intersect = draw_lines(&mut grid, 2, &["U98","R91","D20","R16","D67","R40","U7","R15","U6","R7"]);
+    draw_lines(
+        &mut grid,
+        1,
+        &[
+            "R98", "U47", "R26", "D63", "R33", "U87", "L62", "D20", "R33", "U53", "R51",
+        ],
+    );
+    let mut intersect = draw_lines(
+        &mut grid,
+        2,
+        &[
+            "U98", "R91", "D20", "R16", "D67", "R40", "U7", "R15", "U6", "R7",
+        ],
+    );
     intersect.sort_by_key(|p| p.point.0.abs() + p.point.1.abs());
     let first = intersect.into_iter().next().unwrap();
     assert_eq!((124, 11), first.point);
@@ -57,15 +88,35 @@ fn test_nearest_distance_intersect() {
     assert_eq!(30, first.line1_length + first.line2_length);
 
     let mut grid = Grid::default();
-    draw_lines(&mut grid, 1, &["R75","D30","R83","U83","L12","D49","R71","U7","L72"]);
-    let mut intersect = draw_lines(&mut grid, 2, &["U62","R66","U55","R34","D71","R55","D58","R83"]);
+    draw_lines(
+        &mut grid,
+        1,
+        &["R75", "D30", "R83", "U83", "L12", "D49", "R71", "U7", "L72"],
+    );
+    let mut intersect = draw_lines(
+        &mut grid,
+        2,
+        &["U62", "R66", "U55", "R34", "D71", "R55", "D58", "R83"],
+    );
     intersect.sort_by_key(|p| p.line1_length + p.line2_length);
     let first = intersect.into_iter().next().unwrap();
     assert_eq!(610, first.line1_length + first.line2_length);
 
     let mut grid = Grid::default();
-    draw_lines(&mut grid, 1, &["R98","U47","R26","D63","R33","U87","L62","D20","R33","U53","R51"]);
-    let mut intersect = draw_lines(&mut grid, 2, &["U98","R91","D20","R16","D67","R40","U7","R15","U6","R7"]);
+    draw_lines(
+        &mut grid,
+        1,
+        &[
+            "R98", "U47", "R26", "D63", "R33", "U87", "L62", "D20", "R33", "U53", "R51",
+        ],
+    );
+    let mut intersect = draw_lines(
+        &mut grid,
+        2,
+        &[
+            "U98", "R91", "D20", "R16", "D67", "R40", "U7", "R15", "U6", "R7",
+        ],
+    );
     intersect.sort_by_key(|p| p.line1_length + p.line2_length);
     let first = intersect.into_iter().next().unwrap();
     assert_eq!(410, first.line1_length + first.line2_length);
@@ -127,7 +178,13 @@ struct Grid {
 }
 
 impl Grid {
-    fn add(&mut self, line_num: usize, line_distance: u32, x: isize, y: isize) -> Option<NonZeroU32> {
+    fn add(
+        &mut self,
+        line_num: usize,
+        line_distance: u32,
+        x: isize,
+        y: isize,
+    ) -> Option<NonZeroU32> {
         let area = self.get_area_mut(x, y);
         let x = x.abs() as usize;
         let y = y.abs() as usize;

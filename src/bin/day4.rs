@@ -1,12 +1,17 @@
-fn main(){
-    println!("Part 1: {} options", generate_passwords(357253, 892942).len());
-    println!("Part 2: {} options", generate_passwords_v2(357253, 892942).len());
+fn main() {
+    println!(
+        "Part 1: {} options",
+        generate_passwords(357_253, 892_9422).len()
+    );
+    println!(
+        "Part 2: {} options",
+        generate_passwords_v2(357_253, 892_942).len()
+    );
 }
-
 
 fn generate_passwords(min: u32, max: u32) -> Vec<u32> {
     let mut result = Vec::new();
-    for i in min+1..max {
+    for i in min + 1..max {
         if is_valid_password(i) {
             result.push(i);
         }
@@ -22,7 +27,6 @@ fn is_valid_password(num: u32) -> bool {
     if bytes.len() != 6 {
         return false;
     }
-
 
     let mut prev = bytes[0];
     let mut has_adjacent = false;
@@ -43,14 +47,13 @@ fn is_valid_password(num: u32) -> bool {
 
 fn generate_passwords_v2(min: u32, max: u32) -> Vec<u32> {
     let mut result = Vec::new();
-    for i in min+1..max {
+    for i in min + 1..max {
         if is_valid_password_v2(i) {
             result.push(i);
         }
     }
     result
 }
-
 
 fn is_valid_password_v2(num: u32) -> bool {
     let num_str = num.to_string();
@@ -60,7 +63,6 @@ fn is_valid_password_v2(num: u32) -> bool {
     if bytes.len() != 6 {
         return false;
     }
-
 
     let mut prev = bytes[0];
     let mut has_adjacent = false;
@@ -84,7 +86,7 @@ fn is_valid_password_v2(num: u32) -> bool {
     let mut i = 0;
     while i < bytes.len() {
         let c = bytes[i];
-        let repeating_count = bytes[i+1..].iter().take_while(|ch| **ch == c).count();
+        let repeating_count = bytes[i + 1..].iter().take_while(|ch| **ch == c).count();
 
         if repeating_count == 1 {
             return true;
@@ -96,17 +98,17 @@ fn is_valid_password_v2(num: u32) -> bool {
 }
 
 #[test]
-fn test_valid_password(){
-    assert!(is_valid_password(111123));
-    assert!(is_valid_password(111111));
-    assert!(!is_valid_password(135679));
-    assert!(!is_valid_password(223450));
-    assert!(!is_valid_password(123789));
+fn test_valid_password() {
+    assert!(is_valid_password(111_123));
+    assert!(is_valid_password(111_111));
+    assert!(!is_valid_password(135_679));
+    assert!(!is_valid_password(223_450));
+    assert!(!is_valid_password(123_789));
 }
 
 #[test]
-fn test_valid_password_v2(){
-    assert!(is_valid_password_v2(112233));
-    assert!(is_valid_password_v2(111122));
-    assert!(!is_valid_password_v2(123444));
+fn test_valid_password_v2() {
+    assert!(is_valid_password_v2(112_233));
+    assert!(is_valid_password_v2(111_122));
+    assert!(!is_valid_password_v2(123_444));
 }

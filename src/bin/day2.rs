@@ -31,12 +31,12 @@ fn evaluate_with_input(mut program: Vec<usize>, noun: usize, verb: usize) -> usi
 #[test]
 fn test_evaluate_with_input() {
     let input = aoc::input!();
-    let mut input = input
+    let input = input
         .split(',')
         .map(|n| n.trim().parse::<usize>().expect("Could not parse num"))
         .collect::<Vec<_>>();
 
-    assert_eq!(5434663, evaluate_with_input(input, 12, 2));
+    assert_eq!(5_434_663, evaluate_with_input(input, 12, 2));
 }
 
 fn evaluate(input: &mut Vec<usize>) {

@@ -36,12 +36,12 @@ fn test_calc_fuel_value() {
     assert_eq!(2, calc_fuel_value(12));
     assert_eq!(2, calc_fuel_value(14));
     assert_eq!(654, calc_fuel_value(1969));
-    assert_eq!(33583, calc_fuel_value(100756));
+    assert_eq!(33583, calc_fuel_value(100_756));
 }
 
 #[test]
 fn test_calc_fuel_value_recursive() {
     assert_eq!(2, calc_fuel_value_recursive(12));
     assert_eq!(966, calc_fuel_value_recursive(1969));
-    assert_eq!(50346, calc_fuel_value_recursive(100756));
+    assert_eq!(50346, calc_fuel_value_recursive(100_756));
 }
