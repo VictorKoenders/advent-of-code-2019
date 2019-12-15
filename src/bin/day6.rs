@@ -6,6 +6,7 @@ fn main() {
     let input = aoc::input!();
     let input = input.trim().split('\n').collect::<Vec<_>>();
     let orbits = Orbits::parse(&input);
+    println!("Found {} nodes", orbits.items.len());
     println!("Part 1: {}", orbits.calculate_total_link_count());
 
     let path = orbits.find_fastest_path_between("YOU", "SAN");
@@ -135,6 +136,7 @@ impl<'a> Orbits<'a> {
     pub fn find_fastest_path_between(&self, start: &'a str, end: &'a str) -> Vec<&'a str> {
         let start_index = self.find_orbit_by_name(start);
         let end_index = self.find_orbit_by_name(end);
+        let mut iteration_count = 0;
 
         let mut path_list = VecDeque::new();
         path_list.push_back(vec![start_index]);
@@ -144,6 +146,7 @@ impl<'a> Orbits<'a> {
 
             for other in orbit.parents.iter().chain(orbit.children.iter()).cloned() {
                 if other == end_index {
+                    println!("Found path in {} iterations", iteration_count,);
                     let result = path
                         .into_iter()
                         .chain(Some(other))
@@ -151,6 +154,8 @@ impl<'a> Orbits<'a> {
                         .collect();
                     return result;
                 }
+                iteration_count += 1;
+                // Only add this new node to the path if it is not visited yet
                 if !path.contains(&other) {
                     let mut new_path = path.clone();
                     new_path.push(other);

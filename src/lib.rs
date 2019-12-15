@@ -1,3 +1,5 @@
+pub mod intcode;
+
 #[macro_export]
 macro_rules! input {
     () => {{
