@@ -107,7 +107,8 @@ impl ParameterMode {
     }
 }
 
-pub static OPERATIONS: &[fn(isize, &mut Memory, &mut dyn Io) -> bool] = &[
+type OperationFn = fn(isize, &mut Memory, &mut dyn Io) -> bool;
+pub static OPERATIONS: &[OperationFn] = &[
     add,
     multiply,
     read,
